@@ -19,7 +19,8 @@
 /**
  * @brief TPM1 initialization. Input capture.
  */
-void TPM1_Init_InputCapture(void);
+void TPM1_Init_InputCapture(int port);
+void TPM0_Init_InputCapture();
 /**
  * @brief TPM0 initialization. PWM.
  */
@@ -29,7 +30,8 @@ void TPM0_Init_PWM(void);
  *
  * @return Value of counter.
  */
-uint32_t TPM1_GetVal(void);
+uint32_t TPM1_GetVal();
+uint32_t TPM0_GetVal();
 /**
  * @brief Set value of counter from channel of TPM0.
  *

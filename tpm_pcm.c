@@ -71,17 +71,3 @@ void TPM0_PCM_Play(void) {
 	playFlag = 1;
 }
 
-void TPM0_IRQHandler(void) {
-	
-	if (playFlag) {
-		if (upSampleCNT == 0) TPM0->CONTROLS[2].CnV = wave1[sampleCNT++]; // load new sample
-		if (sampleCNT > WAVE1_SAMPLES) {
-			playFlag = 0;         // stop if at the end
-			TPM0->CONTROLS[2].CnV = 0;
-		}
-		// 40,96kHz / 10 ~ 4,1kHz ~ WAVE_RATE
-		if (++upSampleCNT > (UPSAMPLING-1)) upSampleCNT = 0;
-	}
-	
-	TPM0->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK; 
-}

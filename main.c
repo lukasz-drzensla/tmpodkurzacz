@@ -28,73 +28,82 @@ void lcd_update(void);
 \******************************************************************************/
 static uint8_t sliderVal = 50;
 static uint8_t sliderOld = 0;
-static uint8_t msTicks = 0;
+static int msTicks = 0;
 static uint8_t newTick = 0;
 
-/**
- * @brief The main loop. 
- * 
- * @return NULL 
- */
+int sensor0 = 0;
+int sensor1 = 1;
+
+ #define trig_pin 6 //pin of the first sensor
  
+ void trig_init()
+ {
+	 //first sensor
+	 SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
+	 PORTB->PCR[trig_pin] = PORT_PCR_MUX(1); //MUX config as GPIO
+	 PTB -> PDDR |= (1<<trig_pin);
+	 PTB->PSOR |= (1<<trig_pin);
+	 
+	 PORTB->PCR[trig_pin+1] = PORT_PCR_MUX(1); //MUX config as GPIO
+	 PTB -> PDDR |= (1<<(trig_pin+1));
+	 PTB->PSOR |= (1<<(trig_pin+1));
+ }
  
-  void trigger ()
+void trigger (int sensor)
 {
-	LED_Ctrl(LED_GREEN, LED_OFF);
+			PTB->PCOR |= (1<<(trig_pin+sensor));
 			for (int j =0; j < 60; j++)
 			{
 				DELAY(0);
 			}
-			LED_Ctrl(LED_GREEN, LED_ON);
+			PTB->PSOR |= (1<<(trig_pin+sensor));
+}
+
+int get_distance(uint32_t value)
+{
+	return (int)(10*value-6)/19;
 }
  
 int main (void) { 
 	
 	uint8_t sliderTemp;
 	
-	TSI_Init ();  													/* initialize slider */ 
-	
-	LED_Init ();	 													/* initialize all LEDs */ 
-	LED_Welcome();  												/* blink with all LEDs */
+	//TSI_Init ();  													/* initialize slider */ 
 
 	LCD1602_Init (); 												/* initialize LCD */ 
 	lcd_static(); 													/* display default on LCD */
-	
-	//PIT_Init_Generator (); 					  // ToDo 3.2: Disable PIT initialization
 
 	SysTick_Config(1000000); 								/* initialize system timer */
 	
-	TPM1_Init_InputCapture ();			// ToDo 2.2: Enable TPM1 initialization  // ToDo 3.2: Disable TPM1 initialization
-
-	TPM0_Init_PWM ();			// ToDo 3.3: Enable TPM0 initialization  // ToDo 4.2: Disable TPM0 initialization
+				// ToDo 2.2: Enable TPM1 initialization  // ToDo 3.2: Disable TPM1 initialization
 	
-//  TPM0_Init_PCM ();     // ToDo 4.3: Enable TPM0 as PCM initialization
+	trig_init(); //initialize all the triggers
+	TPM1_Init_InputCapture (0);
+	TPM0_Init_InputCapture();
 	
   while(1) {
-
 		__WFI();															/* sleep & wait for interrupt */
 
 		// simple schedule
 		if (newTick) {
+
+				trigger(0); //always trigger
+				trigger(1); //always trigger
+
 			newTick = 0;												/* clear flag & choose task */
-			// task 1 - read slider
-			if( msTicks%2 == 0 ) {
-				sliderTemp = TSI_ReadSlider();
-				if (sliderTemp > 0) {
-					sliderVal = sliderTemp;
-					//PIT_SetTSV(sliderVal); 		/* change frequency */
-				  //TPM0_SetVal(sliderVal);  // ToDo 3.3: Activate setting CnV in TPM0  // ToDo 4.2: Disable for PCM exercise
-					trigger();
-//				  TPM0_PCM_Play(); 				 // ToDo 4.3: Play wave from the beginning
-				}
-			}
+
 			// task 2 - refresh display
 			if( msTicks%5 == 0) {
+
+				sensor0=get_distance(TPM1_GetVal());
+				sensor1=get_distance(TPM0_GetVal());
+					
 				lcd_update();
 			}
 		}
 	} /* end_while */
 }
+
 /**
  * @brief System time update. 
  */
@@ -109,21 +118,18 @@ void lcd_static(void) {
 	
 	LCD1602_ClearAll();
 	LCD1602_SetCursor(0, 0);
-	LCD1602_Print("Slider = ");
+	LCD1602_Print("Sensor0 = ");
 	LCD1602_SetCursor(0, 1);
-	LCD1602_Print("TPM    = "); // ToDo 2.5: Enable to see result on LCD
+	LCD1602_Print("Sensor1 = "); // ToDo 2.5: Enable to see result on LCD
 	lcd_update();								// ToDo 2.5: Enable to see result on LCD
 }
 /**
  * @brief Update values on LCD. 
  */
 void lcd_update(void) {
-	
-	if (sliderVal != sliderOld) {
-		sliderOld = sliderVal;
+
 		LCD1602_SetCursor(9, 0);
-		LCD1602_PrintNum(sliderOld);
-	}
+		LCD1602_PrintNum(sensor0);
 	LCD1602_SetCursor(9, 1);  // ToDo 2.5: Enable to see result on LCD
-	LCD1602_PrintNum((int)(10*TPM1_GetVal()-6)/19); // ToDo 2.5: Enable to see result on LCD
+	LCD1602_PrintNum(sensor1); // ToDo 2.5: Enable to see result on LCD
 }
