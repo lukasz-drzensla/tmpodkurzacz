@@ -95,8 +95,18 @@ int main (void) {
 			// task 2 - refresh display
 			if( msTicks%5 == 0) {
 
-				sensor0=get_distance(TPM1_GetVal());
-				sensor1=get_distance(TPM0_GetVal());
+				//sensor0=get_distance(TPM1_GetVal());
+				//sensor1=get_distance(TPM0_GetVal());
+				int temp0 = get_distance (TPM1_GetVal());
+				int temp1 = get_distance (TPM0_GetVal());
+				if (temp0 < 500)
+				{
+					sensor0 = temp0;
+				}
+				if (temp1 < 500)
+				{
+					sensor1=temp1;
+				}
 					
 				lcd_update();
 			}
