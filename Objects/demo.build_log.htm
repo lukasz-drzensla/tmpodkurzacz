@@ -9,7 +9,7 @@ License Information: £ukasz Drzensla, AGH University of Science and Technology, 
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.32.0.0
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+Toolchain Path:  E:\Software\keil\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 7 (build 960)
 Assembler:       Armasm.exe V5.06 update 7 (build 960)
 Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
@@ -21,11 +21,11 @@ Target DLL:      Segger\JL2CM3.dll V2.99.38.0
 Dialog DLL:      TARMCM1.DLL V1.14.3.0
  
 <h2>Project:</h2>
-D:\Workspace\AGH\Semestr 5\TM2\TMP-PROJ\demo.uvprojx
-Project File Date:  01/17/2023
+E:\Workspace\AGH\Sem 5\TMP2\PROJEKT - POMIAR\demo.uvprojx
+Project File Date:  11/12/2022
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'E:\Software\keil\ARM\ARMCC\Bin'
 Build target 'FRDM-KL05ZJ'
 compiling main.c...
 tpm.h(23): warning:  #1295-D: Deprecated declaration TPM0_Init_InputCapture - give arg types
@@ -36,17 +36,17 @@ tpm.h(34): warning:  #1295-D: Deprecated declaration TPM0_GetVal - give arg type
   uint32_t TPM0_GetVal();
 main.c(20): warning:  #1295-D: Deprecated declaration clear - give arg types
   void clear();
-main.c(112): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c(113): warning:  #186-D: pointless comparison of unsigned integer with zero
   				DELAY(0);
-main.c(133): warning:  #177-D: variable "sliderTemp"  was declared but never referenced
+main.c(138): warning:  #177-D: variable "sliderTemp"  was declared but never referenced
   	uint8_t sliderTemp;
-main.c(83): warning:  #177-D: variable "sliderVal"  was declared but never referenced
+main.c(84): warning:  #177-D: variable "sliderVal"  was declared but never referenced
   static uint8_t sliderVal = 50;
-main.c(84): warning:  #177-D: variable "sliderOld"  was declared but never referenced
+main.c(85): warning:  #177-D: variable "sliderOld"  was declared but never referenced
   static uint8_t sliderOld = 0;
 main.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=1860 RO-data=224 RW-data=96 ZI-data=352  
+Program Size: Code=1912 RO-data=224 RW-data=104 ZI-data=352  
 ".\Objects\demo.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -65,17 +65,17 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_FRDM-KL05ZJ
-  C:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include
-  C:\Users\Lenovo\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include
+  E:\Software\keilpacks\ARM\CMSIS\5.9.0\CMSIS\Core\Include
+  E:\Software\keilpacks\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device\Source\ARM\startup_MKL05Z4.s
       Source file:   Device\Source\system_MKL05Z4.c
-Build Time Elapsed:  00:00:01
+      Source file:   Device\Source\ARM\startup_MKL05Z4.s
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

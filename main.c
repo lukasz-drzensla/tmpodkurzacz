@@ -27,6 +27,7 @@ void clear();
 #define wheelLeftB 2
 #define wheelRightF 13
 
+
 void forward()
 {
 	//SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
@@ -123,10 +124,14 @@ int get_distance(uint32_t value)
 	return (int)(10*value-6)/19;
 }
  
+
+int n = 0;
+int count_n=0;
+
 int main (void) { 
 
 
-	PTB -> PDDR = (1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF); //port 8 in output, port 9 in output
+	PTB -> PDDR |= (1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF); //port 8 in output, port 9 in output
 	
 	
 	trig_init();
@@ -165,18 +170,42 @@ int main (void) {
 				//lcd_update();
 				
 				
-
-				if (sensor0 > 20)
+				if (msTicks % 5==0)
+				{
+										
+				if (sensor0 > 25)
 				{
 					forward();
 				} else {
-					if (sensor1 > 20)
+					
+					if (sensor1 < 20)
 					{
-						TurnRight_90();
-					} else {
-						TurnLeft_90();
+						//detected close to the wall
+						count_n=1;
+					} 
+					if (count_n == 1)
+					{
+						if (n < 2000)
+						{
+							n++;
+						} else {
+							count_n=0;
+							n = 0;
 						}
+						
+					}
+					
+					if (count_n == 1)
+					{
+						TurnLeft_90();
+					} else {
+						TurnRight_90();
+					}
+					
+					
 				}
+
+			}
 			
 			
 			newTick = 0;	
