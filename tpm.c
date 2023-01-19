@@ -73,7 +73,7 @@ void TPM1_Init_InputCapture(int port) {
 		TPM1->CONTROLS[0].CnSC |= (TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK); /* capture on both edges */ 
 		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHIE_MASK; // ToDo 2.1.6: Enable interrupt on selected channel
 	
-		NVIC_SetPriority(TPM1_IRQn, 1);  /* TPM1 interrupt priority level  */
+		NVIC_SetPriority(TPM1_IRQn, 3);  /* TPM1 interrupt priority level  */
 
 		NVIC_ClearPendingIRQ(TPM1_IRQn); 
 		NVIC_EnableIRQ(TPM1_IRQn);	/* Enable Interrupts */

@@ -34,18 +34,20 @@ tpm.h(33): warning:  #1295-D: Deprecated declaration TPM1_GetVal - give arg type
   uint32_t TPM1_GetVal();
 tpm.h(34): warning:  #1295-D: Deprecated declaration TPM0_GetVal - give arg types
   uint32_t TPM0_GetVal();
-main.c(57): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c(20): warning:  #1295-D: Deprecated declaration clear - give arg types
+  void clear();
+main.c(112): warning:  #186-D: pointless comparison of unsigned integer with zero
   				DELAY(0);
-main.c(69): warning:  #177-D: variable "sliderTemp"  was declared but never referenced
+main.c(133): warning:  #177-D: variable "sliderTemp"  was declared but never referenced
   	uint8_t sliderTemp;
-main.c(29): warning:  #177-D: variable "sliderVal"  was declared but never referenced
+main.c(83): warning:  #177-D: variable "sliderVal"  was declared but never referenced
   static uint8_t sliderVal = 50;
-main.c(30): warning:  #177-D: variable "sliderOld"  was declared but never referenced
+main.c(84): warning:  #177-D: variable "sliderOld"  was declared but never referenced
   static uint8_t sliderOld = 0;
-main.c: 7 warnings, 0 errors
+main.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=2592 RO-data=224 RW-data=104 ZI-data=352  
-".\Objects\demo.axf" - 0 Error(s), 7 Warning(s).
+Program Size: Code=1860 RO-data=224 RW-data=96 ZI-data=352  
+".\Objects\demo.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -73,7 +75,7 @@ Package Vendor: Keil
    * Component: Keil::Device:Startup:1.0.0
       Source file:   Device\Source\ARM\startup_MKL05Z4.s
       Source file:   Device\Source\system_MKL05Z4.c
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

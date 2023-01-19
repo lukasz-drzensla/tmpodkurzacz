@@ -17,6 +17,60 @@
 #include "tpm.h" // ToDo 2.2: Attach TPM header
 //#include "tpm_pcm.h"  // ToDo 4.1 Attach TPM_PCM header (detach tpm.h)
 
+void clear();
+
+//kola
+#define wheelLeftF 5
+#define wheelRightB 1
+
+
+#define wheelLeftB 2
+#define wheelRightF 13
+
+void forward()
+{
+	//SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
+	clear();
+	PORTB->PCR[wheelLeftB] = PORT_PCR_MUX(1); //MUX config as GPIO
+	PORTB->PCR[wheelRightB] = PORT_PCR_MUX(1); //MUX config as GPIO
+
+	
+	
+	PTB->PDOR &= ~(( 1 << wheelLeftB ) | (1 << wheelRightB));		//set LED as ON
+	
+}
+
+void back()
+{
+	clear();
+	PORTB->PCR[wheelLeftF] = PORT_PCR_MUX(1); //MUX config as GPIO
+	PORTB->PCR[wheelRightF] = PORT_PCR_MUX(1); //MUX config as GPIO
+
+	PTB->PDOR &= ~(( 1 << wheelLeftF ) | (1 << wheelRightF));		//set LED as ON
+	
+}
+void TurnRight_90()
+{
+	clear();
+	PORTB->PCR[wheelLeftF] = PORT_PCR_MUX(1); //MUX config as GPIO
+
+	PTB->PDOR &= ~((1 << wheelLeftF));		//set LED as ON
+	
+}
+
+void TurnLeft_90()
+{
+	clear();
+	PORTB->PCR[wheelRightF] = PORT_PCR_MUX(1); //MUX config as GPIO
+
+
+	PTB->PDOR &= ~(( 1 << wheelRightF ));		//set LED as ON
+	
+	
+}
+
+
+
 /******************************************************************************\
 * Private prototypes
 \******************************************************************************/
@@ -32,7 +86,7 @@ static int msTicks = 0;
 static uint8_t newTick = 0;
 
 int sensor0 = 0;
-int sensor1 = 1;
+int sensor1 = 0;
 
  #define trig_pin 6 //pin of the first sensor
  
@@ -51,6 +105,7 @@ int sensor1 = 1;
  
 void trigger (int sensor)
 {
+	
 			PTB->PCOR |= (1<<(trig_pin+sensor));
 			for (int j =0; j < 60; j++)
 			{
@@ -59,25 +114,33 @@ void trigger (int sensor)
 			PTB->PSOR |= (1<<(trig_pin+sensor));
 }
 
+void clear(){
+	PTB -> PSOR = ((1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF));
+}
+
 int get_distance(uint32_t value)
 {
 	return (int)(10*value-6)/19;
 }
  
 int main (void) { 
+
+
+	PTB -> PDDR = (1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF); //port 8 in output, port 9 in output
 	
+	
+	trig_init();
 	uint8_t sliderTemp;
 	
 	//TSI_Init ();  													/* initialize slider */ 
 
-	LCD1602_Init (); 												/* initialize LCD */ 
-	lcd_static(); 													/* display default on LCD */
+	//LCD1602_Init (); 												/* initialize LCD */ 
+	//lcd_static(); 													/* display default on LCD */
 
 	SysTick_Config(1000000); 								/* initialize system timer */
 	
 				// ToDo 2.2: Enable TPM1 initialization  // ToDo 3.2: Disable TPM1 initialization
 	
-	trig_init(); //initialize all the triggers
 	TPM1_Init_InputCapture (0);
 	TPM0_Init_InputCapture();
 	
@@ -86,30 +149,39 @@ int main (void) {
 
 		// simple schedule
 		if (newTick) {
-
+				
 				trigger(0); //always trigger
 				trigger(1); //always trigger
+									/* clear flag & choose task */
 
-			newTick = 0;												/* clear flag & choose task */
-
-			// task 2 - refresh display
-			if( msTicks%5 == 0) {
-
-				//sensor0=get_distance(TPM1_GetVal());
-				//sensor1=get_distance(TPM0_GetVal());
-				int temp0 = get_distance (TPM1_GetVal());
-				int temp1 = get_distance (TPM0_GetVal());
-				if (temp0 < 500)
-				{
-					sensor0 = temp0;
-				}
-				if (temp1 < 500)
-				{
+				int temp0=get_distance(TPM1_GetVal());
+				if (temp0 < 300)
+					sensor0=temp0;
+				int temp1=get_distance(TPM0_GetVal());
+				if (temp1 < 300)
 					sensor1=temp1;
+				
+			
+				//lcd_update();
+				
+				
+
+				if (sensor0 > 20)
+				{
+					forward();
+				} else {
+					if (sensor1 > 20)
+					{
+						TurnRight_90();
+					} else {
+						TurnLeft_90();
+						}
 				}
-					
-				lcd_update();
-			}
+			
+			
+			newTick = 0;	
+		
+			
 		}
 	} /* end_while */
 }
