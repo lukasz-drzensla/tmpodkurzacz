@@ -30,7 +30,9 @@ static uint16_t tpm0Diff = 0;
 static uint16_t tpm0New = 0;
 static uint16_t tpm0Old = 0;
 
-static uint8_t tpm0Enabled = 0;
+int newDist0=0;
+int newDist1=0;
+
 
 void TPM0_Init_InputCapture() {
 		SIM->SCGC6 |= SIM_SCGC6_TPM0_MASK;		// ToDo 2.1.1: Enable TPM1 mask in SCGC6 register
@@ -56,13 +58,13 @@ void TPM0_Init_InputCapture() {
 
 }
 
-void TPM1_Init_InputCapture(int port) {
+void TPM1_Init_InputCapture() {
 		SIM->SCGC6 |= SIM_SCGC6_TPM1_MASK;		// ToDo 2.1.1: Enable TPM1 mask in SCGC6 register
 		SIM->SOPT2 |= SIM_SOPT2_TPMSRC(2);// ToDo 2.1.1: Choose MCGFLLCLK clock source
 		SIM->SOPT2 |= SIM_SOPT2_TPMSRC(1);
 	
 		SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK; // ToDo 2.1.2: Connect port A to clock
-		PORTA->PCR[port] = PORT_PCR_MUX(2);  // ToDo 2.1.2: Set multiplekser to TPM1 for PTA0, get channel number (page 148 of the Reference Manual)
+		PORTA->PCR[12] = PORT_PCR_MUX(2);  // ToDo 2.1.2: Set multiplekser to TPM1 for PTA0, get channel number (page 148 of the Reference Manual)
 	
 		TPM1->SC |= TPM_SC_PS(128);  				// ToDo 2.1.3: Set prescaler to 128
 		TPM1->SC |= TPM_SC_CMOD(1);					// ToDo 2.1.4: For TMP1, select the internal input clock source
@@ -96,7 +98,7 @@ void TPM0_IRQHandler(void) {
 	tpm0Diff = tpm0New - tpm0Old;	/* calculate difference */
 	//LED_Ctrl(LED_RED, LED_TOGGLE); // ToDo 2.1.7: Enable red led toggle
 	TPM0->CONTROLS[5].CnSC |= TPM_CnSC_CHF_MASK; // ToDo 2.1.8: Clear channel flag
-	
+	newDist0=1;
 }
 /**
  * @brief Interrupt handler for TPM1.
@@ -108,5 +110,24 @@ void TPM1_IRQHandler(void) {
 	tpm1Diff = tpm1New - tpm1Old;	/* calculate difference */
 	//LED_Ctrl(LED_RED, LED_TOGGLE); // ToDo 2.1.7: Enable red led toggle
 	TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK; // ToDo 2.1.8: Clear channel flag
-	
+	newDist1=1;
 }
+
+int getNewDist0(void)
+{
+	return newDist0;
+}
+int getNewDist1(void)
+{
+	return newDist1;
+}
+
+void resetNewDist0(void)
+{
+	newDist0=0;
+}
+void resetNewDist1(void)
+{
+	newDist1=0;
+}
+

@@ -16,11 +16,18 @@
 #include "frdm_bsp.h"
 #include "led.h"
 
+int getNewDist0(void);
+int getNewDist1(void);
+
+void resetNewDist0(void);
+void resetNewDist1(void);
+
+
 /**
  * @brief TPM1 initialization. Input capture.
  */
-void TPM1_Init_InputCapture(int port);
-void TPM0_Init_InputCapture();
+void TPM1_Init_InputCapture(void);
+void TPM0_Init_InputCapture(void);
 /**
  * @brief TPM0 initialization. PWM.
  */
@@ -30,8 +37,8 @@ void TPM0_Init_PWM(void);
  *
  * @return Value of counter.
  */
-uint32_t TPM1_GetVal();
-uint32_t TPM0_GetVal();
+uint32_t TPM1_GetVal(void);
+uint32_t TPM0_GetVal(void);
 /**
  * @brief Set value of counter from channel of TPM0.
  *

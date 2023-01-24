@@ -12,11 +12,7 @@
 #include "frdm_bsp.h" 
 #include "led.h" 
 #include "lcd1602.h" 
-#include "tsi.h"
-#include "pit.h"
-#include "tpm.h" // ToDo 2.2: Attach TPM header
-//#include "tpm_pcm.h"  // ToDo 4.1 Attach TPM_PCM header (detach tpm.h)
-
+#include "tpm.h" 
 void clear();
 
 //kola
@@ -27,34 +23,43 @@ void clear();
 #define wheelLeftB 2
 #define wheelRightF 13
 
+#define trig_pin 6 //pin of the first sensor
+
+
+void wheels_init()
+{
+	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
+	PORTB->PCR[wheelLeftB] = PORT_PCR_MUX(1); //MUX config as GPIO
+	PORTB->PCR[wheelRightB] = PORT_PCR_MUX(1); //MUX config as GPIO	
+	PORTB->PCR[wheelLeftF] = PORT_PCR_MUX(1); //MUX config as GPIO
+	PORTB->PCR[wheelRightF] = PORT_PCR_MUX(1); //MUX config as GPIO
+	PTB -> PDDR |= (1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF); //wheels as output
+}
+
+
+int n = 0;
+
 
 void forward()
 {
-	//SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
-	clear();
-	PORTB->PCR[wheelLeftB] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PORTB->PCR[wheelRightB] = PORT_PCR_MUX(1); //MUX config as GPIO
-
-	
-	
-	PTB->PDOR &= ~(( 1 << wheelLeftB ) | (1 << wheelRightB));		//set LED as ON
+	clear();	
+	n+=1;
+	if (n%2==0){
+		PTB->PDOR &= ~(( 1 << wheelLeftB ) | (1 << wheelRightB));		//set LED as ON
+		n = 0;
+	}
 	
 }
 
 void back()
 {
 	clear();
-	PORTB->PCR[wheelLeftF] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PORTB->PCR[wheelRightF] = PORT_PCR_MUX(1); //MUX config as GPIO
-
 	PTB->PDOR &= ~(( 1 << wheelLeftF ) | (1 << wheelRightF));		//set LED as ON
 	
 }
 void TurnRight_90()
 {
 	clear();
-	PORTB->PCR[wheelLeftF] = PORT_PCR_MUX(1); //MUX config as GPIO
-
 	PTB->PDOR &= ~((1 << wheelLeftF));		//set LED as ON
 	
 }
@@ -62,12 +67,7 @@ void TurnRight_90()
 void TurnLeft_90()
 {
 	clear();
-	PORTB->PCR[wheelRightF] = PORT_PCR_MUX(1); //MUX config as GPIO
-
-
-	PTB->PDOR &= ~(( 1 << wheelRightF ));		//set LED as ON
-	
-	
+	PTB->PDOR &= ~(( 1 << wheelRightF ));		//set LED as ON	
 }
 
 
@@ -81,15 +81,12 @@ void lcd_update(void);
 /******************************************************************************\
 * Private memory declarations
 \******************************************************************************/
-static uint8_t sliderVal = 50;
-static uint8_t sliderOld = 0;
 static int msTicks = 0;
 static uint8_t newTick = 0;
 
 int sensor0 = 0;
 int sensor1 = 0;
 
- #define trig_pin 6 //pin of the first sensor
  
  void trig_init()
  {
@@ -97,22 +94,23 @@ int sensor1 = 0;
 	 SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
 	 PORTB->PCR[trig_pin] = PORT_PCR_MUX(1); //MUX config as GPIO
 	 PTB -> PDDR |= (1<<trig_pin);
-	 PTB->PSOR |= (1<<trig_pin);
+	 PTB->PCOR |= (1<<trig_pin);
 	 
 	 PORTB->PCR[trig_pin+1] = PORT_PCR_MUX(1); //MUX config as GPIO
 	 PTB -> PDDR |= (1<<(trig_pin+1));
-	 PTB->PSOR |= (1<<(trig_pin+1));
+	 PTB->PCOR |= (1<<(trig_pin+1));
  }
  
 void trigger (int sensor)
 {
 	
-			PTB->PCOR |= (1<<(trig_pin+sensor));
+			PTB->PSOR |= (1<<(trig_pin+sensor));
 			for (int j =0; j < 60; j++)
 			{
 				DELAY(0);
 			}
-			PTB->PSOR |= (1<<(trig_pin+sensor));
+			PTB->PCOR |= (1<<(trig_pin+sensor));
+			
 }
 
 void clear(){
@@ -125,95 +123,92 @@ int get_distance(uint32_t value)
 }
  
 
-int n = 0;
-int count_n=0;
+
+int newSensorData = 0;
+
+
+int corr_right = 0;
+int corr_cnt = 0;
 
 int main (void) { 
 
-
-	PTB -> PDDR |= (1<<wheelLeftB) | (1<<wheelRightB) | (1<<wheelLeftF) | (1<<wheelRightF); //port 8 in output, port 9 in output
-	
-	
+	wheels_init();
 	trig_init();
-	uint8_t sliderTemp;
-	
-	//TSI_Init ();  													/* initialize slider */ 
 
-	//LCD1602_Init (); 												/* initialize LCD */ 
-	//lcd_static(); 													/* display default on LCD */
+	LCD1602_Init (); 												/* initialize LCD */ 
+	lcd_static(); 													/* display default on LCD */
 
-	SysTick_Config(1000000); 								/* initialize system timer */
-	
-				// ToDo 2.2: Enable TPM1 initialization  // ToDo 3.2: Disable TPM1 initialization
-	
-	TPM1_Init_InputCapture (0);
+	SysTick_Config(5000000); 								//over 60 ms measurement cycle is recommended
+		
+	TPM1_Init_InputCapture ();
 	TPM0_Init_InputCapture();
 	
   while(1) {
 		__WFI();															/* sleep & wait for interrupt */
 
 		// simple schedule
-		if (newTick) {
-				
-				trigger(0); //always trigger
-				trigger(1); //always trigger
-									/* clear flag & choose task */
-
-				int temp0=get_distance(TPM1_GetVal());
-				if (temp0 < 300)
-					sensor0=temp0;
-				int temp1=get_distance(TPM0_GetVal());
-				if (temp1 < 300)
-					sensor1=temp1;
-				
+		if (newTick) {	
 			
-				//lcd_update();
+					trigger(0); 
+					trigger(1);
+					newTick=0;
 				
+		}	
+    
+		newSensorData = 0; //reset the flag
+		if(getNewDist1()) { //newDist is set to 1 in TPM1 cnt 
+			resetNewDist1();
+			int temp0=get_distance(TPM1_GetVal());
+			if(temp0 < 500)
+					sensor0=temp0;
+			newSensorData = 1;	
+		}
+	
+		if(getNewDist0()){ //newDist is set to 1 in TPM0 cnt 
+				resetNewDist0();
+				int temp1=get_distance(TPM0_GetVal());
+				if (temp1 < 500)
+					sensor1=temp1;
+				newSensorData = 1;
+		}
 				
-				if (msTicks % 5==0)
+		if(newSensorData==1){	
+				lcd_update();				
+			
+			
+				if (corr_right == 1)
 				{
-										
+					corr_cnt += 1;
+					if (corr_cnt > 10)
+					{
+						corr_cnt = 0;
+						corr_right = 0;
+					}
+				}
+			
+			
+				if (sensor1 > 25)
+				{
+					if (corr_right == 0)
+					{
+						corr_right=1;
+						TurnRight_90();
+						continue;
+					}										
+				}
+			
 				if (sensor0 > 25)
 				{
 					forward();
-				} else {
-					
-					if (sensor1 < 20)
-					{
-						//detected close to the wall
-						count_n=1;
-					} 
-					if (count_n == 1)
-					{
-						if (n < 2000)
-						{
-							n++;
-						} else {
-							count_n=0;
-							n = 0;
-						}
-						
-					}
-					
-					if (count_n == 1)
-					{
-						TurnLeft_90();
-					} else {
-						TurnRight_90();
-					}
-					
-					
+				} else {					
+					TurnLeft_90();		
 				}
 
 			}
-			
-			
-			newTick = 0;	
-		
-			
-		}
-	} /* end_while */
+	} 
 }
+
+
 
 /**
  * @brief System time update. 

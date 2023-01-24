@@ -3,8 +3,8 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'demo' 
- * Target:  'FRDM-KL05ZJ' 
+ * Project: 'robot' 
+ * Target:  'Target 1' 
  */
 
 #ifndef RTE_COMPONENTS_H
