@@ -125,7 +125,7 @@ int get_distance(uint32_t value)
 
 
 int newSensorData = 0;
-
+int left_turns = 0;
 
 int corr_right = 0;
 int corr_cnt = 0;
@@ -187,7 +187,7 @@ int main (void) {
 				}
 			
 			
-				if (sensor1 > 25)
+				if (sensor1 > 20+left_turns)
 				{
 					if (corr_right == 0)
 					{
@@ -197,11 +197,15 @@ int main (void) {
 					}										
 				}
 			
-				if (sensor0 > 25)
+				if (sensor0 > 25+left_turns)
 				{
 					forward();
 				} else {					
-					TurnLeft_90();		
+					TurnLeft_90();	
+					if (!corr_right)
+					{
+						left_turns+=1;
+					}
 				}
 
 			}
