@@ -110,6 +110,9 @@ int left_turns = 0; //how many left turns have been made so far?
 int corr_right = 0;
 int corr_right_cnt = 0;
 
+int corr_left = 0;
+int corr_left_cnt = 0;
+
 int main(void) {
 
 	wheels_init();
@@ -166,10 +169,23 @@ int main(void) {
 				}
 			}
 
+			if (corr_left == 1)
+			{
+				corr_left_cnt += 1;
+				if (corr_left_cnt > 10)
+				{
+					corr_left_cnt = 0;
+					corr_left = 0;
+				}
+			}
+
 			if (sensor1 < 5)
 			{
-				
-				continue;
+				if (corr_left == 0){
+					corr_left=1;
+					turn_left();
+					continue;
+				}
 			}
 
 			if (sensor1 > 10 + left_turns)

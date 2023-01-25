@@ -67,9 +67,9 @@ Section Cross References
     main.o(i.main) refers to tpm.o(i.resetNewDist0) for resetNewDist0
     main.o(i.main) refers to tpm.o(i.TPM0_GetVal) for TPM0_GetVal
     main.o(i.main) refers to main.o(i.lcd_update) for lcd_update
+    main.o(i.main) refers to main.o(i.turn_left) for turn_left
     main.o(i.main) refers to main.o(i.turn_right) for turn_right
     main.o(i.main) refers to main.o(i.forward) for forward
-    main.o(i.main) refers to main.o(i.turn_left) for turn_left
     main.o(i.main) refers to main.o(.data) for newTick
     main.o(i.turn_left) refers to main.o(i.clear) for clear
     main.o(i.turn_right) refers to main.o(i.clear) for clear
@@ -412,35 +412,35 @@ Image Symbol Table
     i.lcd_static                             0x00000b24   Section        0  main.o(i.lcd_static)
     i.lcd_update                             0x00000b64   Section        0  main.o(i.lcd_update)
     i.main                                   0x00000b90   Section        0  main.o(i.main)
-    i.resetNewDist0                          0x00000cfc   Section        0  tpm.o(i.resetNewDist0)
-    i.resetNewDist1                          0x00000d08   Section        0  tpm.o(i.resetNewDist1)
-    i.trig_init                              0x00000d14   Section        0  main.o(i.trig_init)
-    i.trigger                                0x00000d6c   Section        0  main.o(i.trigger)
-    i.turn_left                              0x00000da4   Section        0  main.o(i.turn_left)
-    i.turn_right                             0x00000dc0   Section        0  main.o(i.turn_right)
-    i.wheels_init                            0x00000dd8   Section        0  main.o(i.wheels_init)
+    i.resetNewDist0                          0x00000d38   Section        0  tpm.o(i.resetNewDist0)
+    i.resetNewDist1                          0x00000d44   Section        0  tpm.o(i.resetNewDist1)
+    i.trig_init                              0x00000d50   Section        0  main.o(i.trig_init)
+    i.trigger                                0x00000da8   Section        0  main.o(i.trigger)
+    i.turn_left                              0x00000de0   Section        0  main.o(i.turn_left)
+    i.turn_right                             0x00000dfc   Section        0  main.o(i.turn_right)
+    i.wheels_init                            0x00000e14   Section        0  main.o(i.wheels_init)
     .data                                    0x1ffffc00   Section        4  i2c.o(.data)
     error                                    0x1ffffc00   Data           1  i2c.o(.data)
     timeout                                  0x1ffffc02   Data           2  i2c.o(.data)
     .data                                    0x1ffffc04   Section        2  lcd1602.o(.data)
     lcd_backlight                            0x1ffffc04   Data           1  lcd1602.o(.data)
     pcf_address                              0x1ffffc05   Data           1  lcd1602.o(.data)
-    .data                                    0x1ffffc08   Section       36  main.o(.data)
+    .data                                    0x1ffffc08   Section       44  main.o(.data)
     msTicks                                  0x1ffffc08   Data           4  main.o(.data)
     newTick                                  0x1ffffc0c   Data           1  main.o(.data)
-    .data                                    0x1ffffc2c   Section       20  tpm.o(.data)
-    tpm1Diff                                 0x1ffffc2c   Data           2  tpm.o(.data)
-    tpm1New                                  0x1ffffc2e   Data           2  tpm.o(.data)
-    tpm1Old                                  0x1ffffc30   Data           2  tpm.o(.data)
-    tpm0Diff                                 0x1ffffc32   Data           2  tpm.o(.data)
-    tpm0New                                  0x1ffffc34   Data           2  tpm.o(.data)
-    tpm0Old                                  0x1ffffc36   Data           2  tpm.o(.data)
-    .bss                                     0x1ffffc40   Section       96  libspace.o(.bss)
-    HEAP                                     0x1ffffca0   Section        0  startup_mkl05z4.o(HEAP)
-    STACK                                    0x1ffffca0   Section      256  startup_mkl05z4.o(STACK)
-    Heap_Mem                                 0x1ffffca0   Data           0  startup_mkl05z4.o(HEAP)
-    Stack_Mem                                0x1ffffca0   Data         256  startup_mkl05z4.o(STACK)
-    __initial_sp                             0x1ffffda0   Data           0  startup_mkl05z4.o(STACK)
+    .data                                    0x1ffffc34   Section       20  tpm.o(.data)
+    tpm1Diff                                 0x1ffffc34   Data           2  tpm.o(.data)
+    tpm1New                                  0x1ffffc36   Data           2  tpm.o(.data)
+    tpm1Old                                  0x1ffffc38   Data           2  tpm.o(.data)
+    tpm0Diff                                 0x1ffffc3a   Data           2  tpm.o(.data)
+    tpm0New                                  0x1ffffc3c   Data           2  tpm.o(.data)
+    tpm0Old                                  0x1ffffc3e   Data           2  tpm.o(.data)
+    .bss                                     0x1ffffc48   Section       96  libspace.o(.bss)
+    HEAP                                     0x1ffffca8   Section        0  startup_mkl05z4.o(HEAP)
+    STACK                                    0x1ffffca8   Section      256  startup_mkl05z4.o(STACK)
+    Heap_Mem                                 0x1ffffca8   Data           0  startup_mkl05z4.o(HEAP)
+    Stack_Mem                                0x1ffffca8   Data         256  startup_mkl05z4.o(STACK)
+    __initial_sp                             0x1ffffda8   Data           0  startup_mkl05z4.o(STACK)
 
     Global Symbols
 
@@ -617,16 +617,16 @@ Image Symbol Table
     itoa                                     0x00000ab9   Thumb Code   108  lcd1602.o(i.itoa)
     lcd_static                               0x00000b25   Thumb Code    40  main.o(i.lcd_static)
     lcd_update                               0x00000b65   Thumb Code    36  main.o(i.lcd_update)
-    main                                     0x00000b91   Thumb Code   322  main.o(i.main)
-    resetNewDist0                            0x00000cfd   Thumb Code     8  tpm.o(i.resetNewDist0)
-    resetNewDist1                            0x00000d09   Thumb Code     8  tpm.o(i.resetNewDist1)
-    trig_init                                0x00000d15   Thumb Code    76  main.o(i.trig_init)
-    trigger                                  0x00000d6d   Thumb Code    50  main.o(i.trigger)
-    turn_left                                0x00000da5   Thumb Code    22  main.o(i.turn_left)
-    turn_right                               0x00000dc1   Thumb Code    20  main.o(i.turn_right)
-    wheels_init                              0x00000dd9   Thumb Code    40  main.o(i.wheels_init)
-    Region$$Table$$Base                      0x00000e10   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00000e30   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x00000b91   Thumb Code   374  main.o(i.main)
+    resetNewDist0                            0x00000d39   Thumb Code     8  tpm.o(i.resetNewDist0)
+    resetNewDist1                            0x00000d45   Thumb Code     8  tpm.o(i.resetNewDist1)
+    trig_init                                0x00000d51   Thumb Code    76  main.o(i.trig_init)
+    trigger                                  0x00000da9   Thumb Code    50  main.o(i.trigger)
+    turn_left                                0x00000de1   Thumb Code    22  main.o(i.turn_left)
+    turn_right                               0x00000dfd   Thumb Code    20  main.o(i.turn_right)
+    wheels_init                              0x00000e15   Thumb Code    40  main.o(i.wheels_init)
+    Region$$Table$$Base                      0x00000e4c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00000e6c   Number         0  anon$$obj.o(Region$$Table)
     sensor0                                  0x1ffffc10   Data           4  main.o(.data)
     sensor1                                  0x1ffffc14   Data           4  main.o(.data)
     n                                        0x1ffffc18   Data           4  main.o(.data)
@@ -634,10 +634,12 @@ Image Symbol Table
     left_turns                               0x1ffffc20   Data           4  main.o(.data)
     corr_right                               0x1ffffc24   Data           4  main.o(.data)
     corr_right_cnt                           0x1ffffc28   Data           4  main.o(.data)
-    newDist0                                 0x1ffffc38   Data           4  tpm.o(.data)
-    newDist1                                 0x1ffffc3c   Data           4  tpm.o(.data)
-    __libspace_start                         0x1ffffc40   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x1ffffca0   Data           0  libspace.o(.bss)
+    corr_left                                0x1ffffc2c   Data           4  main.o(.data)
+    corr_left_cnt                            0x1ffffc30   Data           4  main.o(.data)
+    newDist0                                 0x1ffffc40   Data           4  tpm.o(.data)
+    newDist1                                 0x1ffffc44   Data           4  tpm.o(.data)
+    __libspace_start                         0x1ffffc48   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x1ffffca8   Data           0  libspace.o(.bss)
 
 
 
@@ -647,9 +649,9 @@ Memory Map of the image
 
   Image Entry point : 0x00000165
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00000e70, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000eb4, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000e30, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000e6c, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -755,35 +757,35 @@ Memory Map of the image
     0x00000ab8   0x00000ab8   0x0000006c   Code   RO          132    i.itoa              lcd1602.o
     0x00000b24   0x00000b24   0x00000040   Code   RO          217    i.lcd_static        main.o
     0x00000b64   0x00000b64   0x0000002c   Code   RO          218    i.lcd_update        main.o
-    0x00000b90   0x00000b90   0x0000016c   Code   RO          219    i.main              main.o
-    0x00000cfc   0x00000cfc   0x0000000c   Code   RO          331    i.resetNewDist0     tpm.o
-    0x00000d08   0x00000d08   0x0000000c   Code   RO          332    i.resetNewDist1     tpm.o
-    0x00000d14   0x00000d14   0x00000058   Code   RO          220    i.trig_init         main.o
-    0x00000d6c   0x00000d6c   0x00000038   Code   RO          221    i.trigger           main.o
-    0x00000da4   0x00000da4   0x0000001c   Code   RO          222    i.turn_left         main.o
-    0x00000dc0   0x00000dc0   0x00000018   Code   RO          223    i.turn_right        main.o
-    0x00000dd8   0x00000dd8   0x00000038   Code   RO          224    i.wheels_init       main.o
-    0x00000e10   0x00000e10   0x00000020   Data   RO          634    Region$$Table       anon$$obj.o
+    0x00000b90   0x00000b90   0x000001a8   Code   RO          219    i.main              main.o
+    0x00000d38   0x00000d38   0x0000000c   Code   RO          331    i.resetNewDist0     tpm.o
+    0x00000d44   0x00000d44   0x0000000c   Code   RO          332    i.resetNewDist1     tpm.o
+    0x00000d50   0x00000d50   0x00000058   Code   RO          220    i.trig_init         main.o
+    0x00000da8   0x00000da8   0x00000038   Code   RO          221    i.trigger           main.o
+    0x00000de0   0x00000de0   0x0000001c   Code   RO          222    i.turn_left         main.o
+    0x00000dfc   0x00000dfc   0x00000018   Code   RO          223    i.turn_right        main.o
+    0x00000e14   0x00000e14   0x00000038   Code   RO          224    i.wheels_init       main.o
+    0x00000e4c   0x00000e4c   0x00000020   Data   RO          634    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x1ffffc00, Load base: 0x00000e30, Size: 0x00000040, Max: 0xffffffff, ABSOLUTE)
-
-    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
-
-    0x1ffffc00   0x00000e30   0x00000004   Data   RW           15    .data               i2c.o
-    0x1ffffc04   0x00000e34   0x00000002   Data   RW          133    .data               lcd1602.o
-    0x1ffffc06   0x00000e36   0x00000002   PAD
-    0x1ffffc08   0x00000e38   0x00000024   Data   RW          225    .data               main.o
-    0x1ffffc2c   0x00000e5c   0x00000014   Data   RW          333    .data               tpm.o
-
-
-    Execution Region ER_ZI (Exec base: 0x1ffffc40, Load base: 0x00000e70, Size: 0x00000160, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x1ffffc00, Load base: 0x00000e6c, Size: 0x00000048, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x1ffffc40        -       0x00000060   Zero   RW          505    .bss                c_p.l(libspace.o)
-    0x1ffffca0        -       0x00000000   Zero   RW          414    HEAP                startup_mkl05z4.o
-    0x1ffffca0        -       0x00000100   Zero   RW          413    STACK               startup_mkl05z4.o
+    0x1ffffc00   0x00000e6c   0x00000004   Data   RW           15    .data               i2c.o
+    0x1ffffc04   0x00000e70   0x00000002   Data   RW          133    .data               lcd1602.o
+    0x1ffffc06   0x00000e72   0x00000002   PAD
+    0x1ffffc08   0x00000e74   0x0000002c   Data   RW          225    .data               main.o
+    0x1ffffc34   0x00000ea0   0x00000014   Data   RW          333    .data               tpm.o
+
+
+    Execution Region ER_ZI (Exec base: 0x1ffffc48, Load base: 0x00000eb4, Size: 0x00000160, Max: 0xffffffff, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x1ffffc48        -       0x00000060   Zero   RW          505    .bss                c_p.l(libspace.o)
+    0x1ffffca8        -       0x00000000   Zero   RW          414    HEAP                startup_mkl05z4.o
+    0x1ffffca8        -       0x00000100   Zero   RW          413    STACK               startup_mkl05z4.o
 
 
 ==============================================================================
@@ -795,13 +797,13 @@ Image component sizes
 
        420         78          0          4          0      84342   i2c.o
        510         34          0          2          0       5345   lcd1602.o
-       968        156          0         36          0      14172   main.o
+      1028        164          0         44          0      14284   main.o
         68         38        192          0        256        848   startup_mkl05z4.o
         92         14          0          0          0        469   system_mkl05z4.o
        720        122          0         20          0      13574   tpm.o
 
     ----------------------------------------------------------------------
-      2788        450        224         64        256     118750   Object Totals
+      2848        458        224         72        256     118862   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         10          8          0          2          0          0   (incl. Padding)
 
@@ -851,15 +853,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      3408        466        224         64        352     117266   Grand Totals
-      3408        466        224         64        352     117266   ELF Image Totals
-      3408        466        224         64          0          0   ROM Totals
+      3468        474        224         72        352     117378   Grand Totals
+      3468        474        224         72        352     117378   ELF Image Totals
+      3468        474        224         72          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 3632 (   3.55kB)
-    Total RW  Size (RW Data + ZI Data)               416 (   0.41kB)
-    Total ROM Size (Code + RO Data + RW Data)       3696 (   3.61kB)
+    Total RO  Size (Code + RO Data)                 3692 (   3.61kB)
+    Total RW  Size (RW Data + ZI Data)               424 (   0.41kB)
+    Total ROM Size (Code + RO Data + RW Data)       3764 (   3.68kB)
 
 ==============================================================================
 
