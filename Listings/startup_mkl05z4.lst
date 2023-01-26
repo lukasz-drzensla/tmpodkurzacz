@@ -571,11 +571,12 @@ ARM Macro Assembler    Page 9
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --apcs=inter
 work --depend=.\objects\startup_mkl05z4.d -o.\objects\startup_mkl05z4.o -I.\RTE
-\_Target_1 -IE:\Software\keilpacks\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IE:\Soft
-ware\keilpacks\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include --predefine="__EVAL 
-SETA 1" --predefine="__UVISION_VERSION SETA 532" --predefine="_RTE_ SETA 1" --p
-redefine="MKL05Z32xxx4 SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\sta
-rtup_mkl05z4.lst RTE\Device\MKL05Z32xxx4\startup_MKL05Z4.s
+\_Target_1 -IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core
+\Include -IC:\Users\Lenovo\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0
+\Device\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA
+ 532" --predefine="_RTE_ SETA 1" --predefine="MKL05Z32xxx4 SETA 1" --predefine=
+"_RTE_ SETA 1" --list=.\listings\startup_mkl05z4.lst RTE\Device\MKL05Z32xxx4\st
+artup_MKL05Z4.s
 
 
 
