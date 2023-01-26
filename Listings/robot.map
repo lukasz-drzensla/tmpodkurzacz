@@ -49,6 +49,7 @@ Section Cross References
     tpm.o(i.resetNewDist1) refers to tpm.o(.data) for newDist1
     wheels.o(i.back) refers to wheels.o(i.clear) for clear
     wheels.o(i.forward) refers to wheels.o(i.clear) for clear
+    wheels.o(i.forward) refers to aeabi_sdiv.o(.text) for __aeabi_idivmod
     wheels.o(i.forward) refers to wheels.o(.data) for n
     wheels.o(i.turn_left) refers to wheels.o(i.clear) for clear
     wheels.o(i.turn_right) refers to wheels.o(i.clear) for clear
@@ -611,7 +612,7 @@ Image Symbol Table
     TPM1_IRQHandler                          0x0000072d   Thumb Code    50  tpm.o(i.TPM1_IRQHandler)
     TPM1_Init_InputCapture                   0x00000775   Thumb Code   152  tpm.o(i.TPM1_Init_InputCapture)
     clear                                    0x00000941   Thumb Code     8  wheels.o(i.clear)
-    forward                                  0x00000951   Thumb Code    50  wheels.o(i.forward)
+    forward                                  0x00000951   Thumb Code    52  wheels.o(i.forward)
     getNewDist0                              0x0000098d   Thumb Code     6  tpm.o(i.getNewDist0)
     getNewDist1                              0x00000999   Thumb Code     6  tpm.o(i.getNewDist1)
     get_distance                             0x000009a5   Thumb Code    20  main.o(i.get_distance)
@@ -811,10 +812,10 @@ Image component sizes
         92         14          0          0          0        469   system_mkl05z4.o
        720        122          0         20          0      13574   tpm.o
        184         16          0          0          0       1022   trigger.o
-       184         44          0          4          0       2101   wheels.o
+       184         42          0          4          0       2101   wheels.o
 
     ----------------------------------------------------------------------
-      2892        454        224         72        256     120320   Object Totals
+      2892        452        224         72        256     120320   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         10          8          0          2          0          0   (incl. Padding)
 
@@ -864,9 +865,9 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      3512        470        224         72        352     118836   Grand Totals
-      3512        470        224         72        352     118836   ELF Image Totals
-      3512        470        224         72          0          0   ROM Totals
+      3512        468        224         72        352     118836   Grand Totals
+      3512        468        224         72        352     118836   ELF Image Totals
+      3512        468        224         72          0          0   ROM Totals
 
 ==============================================================================
 

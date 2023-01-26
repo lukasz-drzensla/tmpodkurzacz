@@ -16,10 +16,11 @@ void forward()
 {
 	clear();
 	n+=1;
-	if (n%2==0)
+	if (n%3!=0)
 	{	
 		PTB->PDOR &= ~((1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B));		
-		n = 0;
+	} else {
+		n=0;
 	}
 }
 
