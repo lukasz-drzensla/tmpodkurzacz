@@ -7,8 +7,9 @@
 .\objects\main.o: E:\Software\keilpacks\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h
 .\objects\main.o: E:\Software\keilpacks\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h
 .\objects\main.o: E:\Software\keilpacks\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include\system_MKL05Z4.h
-.\objects\main.o: led.h
+.\objects\main.o: tpm.h
+.\objects\main.o: wheels.h
 .\objects\main.o: lcd1602.h
 .\objects\main.o: i2c.h
 .\objects\main.o: E:\Software\keil\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: tpm.h
+.\objects\main.o: trigger.h

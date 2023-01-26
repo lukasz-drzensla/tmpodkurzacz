@@ -1,10 +1,10 @@
 #include "frdm_bsp.h" 
-#include "led.h" 
-#include "lcd1602.h" 
 #include "tpm.h" 
+#include "wheels.h"
+#include "lcd1602.h" 
+#include "trigger.h"
 
 //function prototypes
-void clear(); //sets wheels inactive (not moving)
 void SysTick_Handler(void);
 void lcd_static(void);
 void lcd_update(void);
@@ -17,85 +17,6 @@ static uint8_t newTick = 0;
 int sensor0 = 0;
 int sensor1 = 0;
 
-//wheels pins
-#define WHEEL_LEFT_F 5
-#define WHEEL_RIGHT_B 1
-#define WHEEL_LEFT_B 2
-#define WHEEL_RIGHT_F 13
-
-#define TRIG_PIN 6 //pin of the first sensor
-
-
-void wheels_init()
-{
-	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
-	PORTB->PCR[WHEEL_LEFT_B] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PORTB->PCR[WHEEL_RIGHT_B] = PORT_PCR_MUX(1); //MUX config as GPIO	
-	PORTB->PCR[WHEEL_LEFT_F] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PORTB->PCR[WHEEL_RIGHT_F] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PTB->PDDR |= (1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B) | (1 << WHEEL_LEFT_F) | (1 << WHEEL_RIGHT_F); //wheels as output
-}
-
-
-int n = 0;
-void forward()
-{
-	clear();
-	n += 1;
-	if (n % 2 == 0) {
-		PTB->PDOR &= ~((1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B));		//set LED as ON
-		n = 0;
-	}
-
-}
-
-void back()
-{
-	clear();
-	PTB->PDOR &= ~((1 << WHEEL_LEFT_F) | (1 << WHEEL_RIGHT_F));		//set LED as ON
-
-}
-void turn_right()
-{
-	clear();
-	PTB->PDOR &= ~((1 << WHEEL_LEFT_F));		//set LED as ON
-
-}
-
-void turn_left()
-{
-	clear();
-	PTB->PDOR &= ~((1 << WHEEL_RIGHT_F));		//set LED as ON	
-}
-
-void trig_init()
-{
-	//first sensor
-	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
-	PORTB->PCR[TRIG_PIN] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PTB->PDDR |= (1 << TRIG_PIN);
-	PTB->PCOR |= (1 << TRIG_PIN);
-
-	PORTB->PCR[TRIG_PIN + 1] = PORT_PCR_MUX(1); //MUX config as GPIO
-	PTB->PDDR |= (1 << (TRIG_PIN + 1));
-	PTB->PCOR |= (1 << (TRIG_PIN + 1));
-}
-
-void trigger(int sensor)
-{
-
-	PTB->PSOR |= (1 << (TRIG_PIN + sensor));
-	for (int j = 0; j < 60; j++)
-	{
-		DELAY(0);
-	}
-	PTB->PCOR |= (1 << (TRIG_PIN + sensor));
-
-}
-
-void clear() {
-	PTB->PSOR = ((1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B) | (1 << WHEEL_LEFT_F) | (1 << WHEEL_RIGHT_F));
-}
 
 int get_distance(uint32_t value)
 {
@@ -117,9 +38,9 @@ int main(void) {
 
 	wheels_init();
 	trig_init();
-
+	
 	LCD1602_Init(); 												/* initialize LCD */
-	lcd_static(); 													/* display default on LCD */
+	lcd_static(); 		
 
 	SysTick_Config(5000000); 								//over 60 ms measurement cycle is recommended
 
@@ -157,8 +78,6 @@ int main(void) {
 
 		if (newSensorData == 1) {
 			lcd_update();
-
-
 			if (corr_right == 1)
 			{
 				corr_right_cnt += 1;
@@ -179,7 +98,7 @@ int main(void) {
 				}
 			}
 
-			if (sensor1 < 5)
+			if (sensor1 < 5 + left_turns)
 			{
 				if (corr_left == 0){
 					corr_left=1;
@@ -219,6 +138,7 @@ void SysTick_Handler(void) {
 	newTick = 1;
 }
 
+
 void lcd_static(void) {
 
 	LCD1602_ClearAll();
@@ -236,4 +156,4 @@ void lcd_update(void) {
 	LCD1602_SetCursor(9, 1);  // ToDo 2.5: Enable to see result on LCD
 	LCD1602_PrintNum(sensor1); // ToDo 2.5: Enable to see result on LCD
 }
- 
+

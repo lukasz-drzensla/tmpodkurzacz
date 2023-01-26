@@ -18,7 +18,7 @@ void forward()
 	n+=1;
 	if (n%2==0)
 	{	
-		PTB->PDOR &= ~((1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B));		//set LED as ON
+		PTB->PDOR &= ~((1 << WHEEL_LEFT_B) | (1 << WHEEL_RIGHT_B));		
 		n = 0;
 	}
 }
@@ -26,20 +26,20 @@ void forward()
 void back()
 {
 	clear();
-	PTB->PDOR &= ~((1 << WHEEL_LEFT_F) | (1 << WHEEL_RIGHT_F));		//set LED as ON
+	PTB->PDOR &= ~((1 << WHEEL_LEFT_F) | (1 << WHEEL_RIGHT_F));		
 
 }
 void turn_right()
 {
 	clear();
-	PTB->PDOR &= ~((1 << WHEEL_LEFT_F));		//set LED as ON
+	PTB->PDOR &= ~((1 << WHEEL_LEFT_F));		
 
 }
 
 void turn_left()
 {
 	clear();
-	PTB->PDOR &= ~((1 << WHEEL_RIGHT_F));		//set LED as ON	
+	PTB->PDOR &= ~((1 << WHEEL_RIGHT_F));		
 }
 
 void clear() {

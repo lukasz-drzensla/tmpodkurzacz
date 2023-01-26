@@ -14,7 +14,6 @@
 #define TPM_H
 
 #include "frdm_bsp.h"
-#include "led.h"
 
 int getNewDist0(void);
 int getNewDist1(void);

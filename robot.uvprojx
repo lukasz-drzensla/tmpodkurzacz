@@ -384,16 +384,6 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd1602.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\lcd1602.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
@@ -402,6 +392,46 @@
               <FileName>tpm.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\tpm.c</FilePath>
+            </File>
+            <File>
+              <FileName>trigger.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\trigger.c</FilePath>
+            </File>
+            <File>
+              <FileName>trigger.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\trigger.h</FilePath>
+            </File>
+            <File>
+              <FileName>wheels.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wheels.c</FilePath>
+            </File>
+            <File>
+              <FileName>wheels.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\wheels.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\PROJEKT - POMIAR\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PROJEKT - POMIAR\i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\PROJEKT - POMIAR\lcd1602.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd1602.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PROJEKT - POMIAR\lcd1602.h</FilePath>
             </File>
           </Files>
         </Group>
